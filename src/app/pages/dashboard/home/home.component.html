@@ -2,9 +2,16 @@
 
 <p>
 
-<button  mat-raised-button (click)="toogleLight()" color="primary">Toogle Light</button><br>
-<mat-slider min=2 max=150 (input)="pitch($event)" #slider [disabled]="isDisabled"></mat-slider>
 
+<mat-card class="col-lg-4 col-md-6 col-sm-12 col-xs-12  topics-card text-center">
+    
+      <mat-card-title class="text-center">Light</mat-card-title>
+      <mat-card-subtitle class="text-center">Kitchen</mat-card-subtitle>
+    <mat-card-content>
+        <button  mat-raised-button (click)="toogleLight()">Toogle Light</button><br>
+        <mat-slider class="col-lg-12" min=2 max=150 (input)="pitch($event)" #slider [disabled]="isDisabled"></mat-slider>
+    </mat-card-content>
+  </mat-card>
 
 
 

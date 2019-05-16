@@ -4,8 +4,7 @@ import { connect } from 'mqtt';
 
 
 const client  = connect('mqtt://192.168.1.199:1884');
-var status='';
-var brightness='';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,9 +12,18 @@ var brightness='';
 })
 export class HomeComponent implements OnInit {
   public isDisabled = false;
+  public stats='0';
+  public brightness='150';
+  private self=this;
   @ViewChild('slider')slider;
 
   constructor(private auth:AuthService) {
+   
+   
+   }
+
+  ngOnInit() {
+    var self=this;
     client.on('connect', function () {
       client.subscribe('status', function (err) {
           if (!err) {
@@ -31,21 +39,17 @@ export class HomeComponent implements OnInit {
         {
           if(topic.toString()=='on')
           {
-            status=message.toString();
+            self.stats=message.toString();
           }
           else
           {
-            brightness = message.toString();
+            self.brightness = message.toString();
           }
           
         })
      
      
   });
-   
-   }
-
-  ngOnInit() {
   }
 
   
@@ -56,8 +60,8 @@ export class HomeComponent implements OnInit {
 
   toogleLight()
     {
-      console.log(status);
-      if(status== '1')
+      
+      if(this.stats== '1')
       {
         this.isDisabled=true;
         this.slider.value=2;
@@ -66,10 +70,10 @@ export class HomeComponent implements OnInit {
       else
       {
         this.isDisabled=false;
-        if(brightness != '')
+        if(this.brightness != '')
         {
-        this.slider.value=brightness;
-        client.publish('led',brightness);
+        this.slider.value=this.brightness;
+        client.publish('led',this.brightness);
         } else       
         {
           this.slider.value=150;
