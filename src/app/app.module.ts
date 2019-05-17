@@ -6,7 +6,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -18,14 +17,16 @@ import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './pages/dashboard/layout/layout.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatListModule, MatDialogModule } from '@angular/material';
+import { AddCardDialogComponent } from './pages/dialog/add-card-dialog/add-card-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    LayoutComponent
+    LayoutComponent,
+    AddCardDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,8 +44,12 @@ import { MatButtonModule, MatIconModule, MatListModule } from '@angular/material
     LayoutModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
     
+  ],
+  entryComponents:[
+    AddCardDialogComponent
   ],
   providers: [
     AuthService,

@@ -1,0 +1,15 @@
+
+
+.topics-card{
+    padding:30px !important;
+    border:1px solid #AAA;
+    }
+  
+
+    .comp-selected{
+        background:#FFDC00;
+    }
+.nextButton{
+    font-size:20px;
+    padding:5px;
+}

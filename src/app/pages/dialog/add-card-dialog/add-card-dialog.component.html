@@ -1,0 +1,29 @@
+<div class="container p-5">
+      <h1 cass="text-center">Pick Component(s) Required For Your Card</h1>
+  <div class="row mt-5">
+  <mat-card class="col-lg-4 col-md-6 col-sm-12 col-xs-12 topics-card text-center {{components[0].status == true  ? 'comp-selected':'' }}" (click)="selectComp(0)">
+    <mat-card-title class="text-center">Button</mat-card-title>
+    <mat-card-subtitle class="text-center">Turn Off Or On An Electronic Device</mat-card-subtitle>
+  <mat-card-content>
+      <button  mat-raised-button color="primary">Toogle ON/OFF</button><br>
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card class="col-lg-4 col-md-6 col-sm-12 col-xs-12 ml-5 topics-card text-center {{components[1].status == true  ? 'comp-selected':'' }}" (click)="selectComp(1)">
+    <mat-card-title class="text-center">Slider </mat-card-title>
+    <mat-card-subtitle class="text-center">Control Brightness Of A Device(So Far)</mat-card-subtitle>
+  <mat-card-content>
+      <mat-slider class="col-lg-12" min=2 max=150></mat-slider>
+  </mat-card-content>
+</mat-card>
+
+
+  </div>
+
+<div class="text-center mt-5">
+
+  <button mat-raised-button color="primary" class="nextButton" (click)="Next()">Next</button>
+</div>
+
+</div>

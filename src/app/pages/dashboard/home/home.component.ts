@@ -1,7 +1,8 @@
 import { Component, OnInit ,ViewChild} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { connect } from 'mqtt';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { AddCardDialogComponent } from '../../dialog/add-card-dialog/add-card-dialog.component';
 
 const client  = connect('mqtt://192.168.1.199:1884');
 
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
   private self=this;
   @ViewChild('slider')slider;
 
-  constructor(private auth:AuthService) {
+  constructor(private auth:AuthService,public dialog: MatDialog) {
    
    
    }
@@ -90,4 +91,9 @@ export class HomeComponent implements OnInit {
       client.publish('led',event.value.toString());
   }
  
+
+  AddCardDialog()
+  {
+    const dialogRef = this.dialog.open(AddCardDialogComponent   );
+  }
 }
