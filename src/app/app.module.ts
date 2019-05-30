@@ -5,6 +5,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,7 +46,8 @@ import { AddCardDialogComponent } from './pages/dialog/add-card-dialog/add-card-
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSlideToggleModule
     
   ],
   entryComponents:[

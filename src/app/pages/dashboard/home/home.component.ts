@@ -1,7 +1,7 @@
 import { Component, OnInit ,ViewChild} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { connect } from 'mqtt';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSlideToggleChange} from '@angular/material';
 import { AddCardDialogComponent } from '../../dialog/add-card-dialog/add-card-dialog.component';
 
 const client  = connect('mqtt://192.168.1.199:1884');
@@ -13,8 +13,10 @@ const client  = connect('mqtt://192.168.1.199:1884');
 })
 export class HomeComponent implements OnInit {
   public isDisabled = false;
+  public isAuto=false;
   public stats='0';
   public brightness='150';
+  public auto='0';
   private self=this;
   @ViewChild('slider')slider;
 
@@ -29,8 +31,9 @@ export class HomeComponent implements OnInit {
       client.subscribe('status', function (err) {
           if (!err) {
               console.log('connected');
-              client.subscribe('on');
-              client.subscribe('brightness');
+              client.subscribe('onStatus');
+              client.subscribe('brightnessStatus');
+              client.subscribe('autoStatus')
           }
           else {
               console.log(err);
@@ -38,20 +41,19 @@ export class HomeComponent implements OnInit {
       });
         client.on('message',function(topic,message)
         {
-          if(topic.toString()=='on')
+          switch(topic.toString())
           {
-            self.stats=message.toString();
+            case 'onStatus':self.stats=message.toString();break;
+            case 'brightnessStatus':self.brightness = message.toString();break;
+            case 'autoStatus':self.auto=message.toString();break;
           }
-          else
-          {
-            self.brightness = message.toString();
-          }
-          
         })
-     
-     
   });
-  }
+    if(this.stats == '0')
+    {
+      this.isDisabled=true;
+    }
+}
 
   
   logout()
@@ -61,12 +63,12 @@ export class HomeComponent implements OnInit {
 
   toogleLight()
     {
-      
-      if(this.stats== '1')
+  
+      if(this.stats != '0')
       {
         this.isDisabled=true;
         this.slider.value=2;
-        client.publish('led','0');
+        client.publish('on','0');
       }
       else
       {
@@ -74,11 +76,12 @@ export class HomeComponent implements OnInit {
         if(this.brightness != '')
         {
         this.slider.value=this.brightness;
-        client.publish('led',this.brightness);
+        client.publish('on','1');
+        client.publish('brightness',this.brightness);
         } else       
         {
           this.slider.value=150;
-        client.publish('led','1');
+        client.publish('on','1');
         }
   
       }
@@ -87,8 +90,22 @@ export class HomeComponent implements OnInit {
   }
 
 
+  toogleAuto(value: MatSlideToggleChange)
+  {
+    if(this.auto == '0')
+    {
+      client.publish('auto','1');
+      this.isAuto=true;
+    }
+    else
+    {
+      this.isAuto=false;
+      client.publish('auto','0');
+    }
+     }
+
   pitch(event: any) {
-      client.publish('led',event.value.toString());
+      client.publish('brightness',event.value.toString());
   }
  
 
